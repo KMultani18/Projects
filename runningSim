@@ -1,0 +1,89 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime> 
+
+using namespace std; 
+
+void runner_steps(int&, int&);
+
+int main(){ 
+
+  srand(time(0));
+
+  int runner1 = 0; 
+  int runner2 = 0; 
+
+  cout << "Runner 1: " << runner1 << endl; 
+
+  cout << "Runner 2: " << runner2 << endl; 
+
+  runner_steps(runner1, runner2); 
+
+ 
+  return 0; 
+}
+
+void runner_steps(int& r1, int& r2) {
+
+  int counter1 = 0;
+  int counter2 = 0;
+  
+  while (r1 < 100 && r2 < 100) {
+        
+    r1 += 2;    
+        
+    // Runner 2 moves randomly based on a 12-sided die
+    int steps = rand() % 12 + 1; // roll a 12-sided die
+        
+   
+    if (r2 + steps >= 100) {
+  
+     r2 = 100;
+
+   } else if (steps % 2 == 0) { // made it easier for runner 2 to win or get a tie 
+  
+     r2 += steps;
+
+   } else {
+  
+     r2 -= steps;
+  
+     if (r2 < 0) {
+    
+    r2 = 0;
+  
+  
+     }
+  
+     cout << "Runner 2: " << r2 << " (went backward " << steps << " steps)" << endl;
+
+    }
+
+    
+    
+    cout << "Runner 1: " << r1 << endl;
+        
+    cout << "Runner 2: " << r2 << endl;
+    
+  
+  }
+    
+  // Check which runner won
+    
+  if (r1 >= 100 && r2 >= 100) {
+        
+    cout << "It's a tie!" << endl;
+    
+  } else if (r1 >= 100) {
+        
+    cout << "Runner 1 won!" << endl;
+    
+  } else {
+        
+    cout << "Runner 2 won!" << endl;
+    
+  }
+
+}
+
+
