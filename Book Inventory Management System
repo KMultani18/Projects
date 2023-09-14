@@ -1,0 +1,211 @@
+
+//
+// Book Inventory Management System using Vectors.
+//
+
+// Requirements of the project
+// Book Title, Book Author, ISBN, Book Quantities.
+//
+
+// 1- implement a function to store Book Title, Book Author,
+// ISBN, Book Quantities.
+
+// 2 - implement a function to display all books
+
+// 3 - implement a function to search for a book by its ISBN and display its
+// details.
+
+// 4 - implement a function to update the quantity of a book based on user
+// input(ISBN).
+
+// 5 - implement a function to remove a book from the inventory by its ISBN.
+
+// 6 - use the main function to create a menu-based interface for the user to
+// interact with the inventory.
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+void addBook(std::vector<std::string> &bookT, std::vector<std::string> &bookA,
+             std::vector<std::string> &bookISBN, std::vector<int> &bookQ) {
+
+  std::string title, author, ISBN;
+  int quantity;
+
+  std::cout << "Enter the book title:";
+  std::cin.ignore();
+  std::getline(std::cin, title);
+
+  std::cout << "Enter the book author:";
+  std::getline(std::cin, author);
+
+  std::cout << "Enter the book ISBN:";
+  std::cin >> ISBN;
+
+  std::cout << "Enter the book Quntity:";
+  std::cin >> quantity;
+
+  bookT.push_back(title);
+  bookA.push_back(author);
+  bookISBN.push_back(ISBN);
+  bookQ.push_back(quantity);
+
+  std::cout << "Book added with success" << std::endl;
+}
+
+void displayBooks(const std::vector<std::string> &bookT,
+                  const std::vector<std::string> &bookA,
+                  const std::vector<std::string> &bookISBN,
+                  const std::vector<int> &bookQ) {
+  std::cout << "The list of Books" << std::endl;
+  for (size_t i = 0; i < bookQ.size(); i++) {
+
+    std::cout << "Book Title: " << bookT[i] << " | "
+              << "Book Author: " << bookA[i] << " | "
+              << "Book ISBN: " << bookISBN[i] << " | "
+              << "Book Quanity: " << bookQ[i] << std::endl;
+  }
+}
+
+void searchByISBN(const std::vector<std::string> &bookT,
+                  const std::vector<std::string> &bookA,
+                  const std::vector<std::string> &bookISBN,
+                  const std::vector<int> &bookQ) {
+
+  std::string searchISBN;
+  bool found = false; 
+
+  std::cout << "Enter ISBN:";
+  std::cin.ignore();
+  std::getline(std::cin, searchISBN);
+
+  for (size_t i = 0; i < bookISBN.size(); i++) {
+    if (bookISBN[i] == searchISBN) {
+      found = true;
+      std::cout << "Book Title: " << bookT[i] << " | "
+                << "Book Author: " << bookA[i] << " | "
+                << "Book ISBN: " << bookISBN[i] << " | "
+                << "Book Quanity: " << bookQ[i] << std::endl;
+                break; 
+      }
+    }
+     if (!found) {
+        std::cout << "Book with ISBN " << searchISBN << " not found." << std::endl;
+    }
+}
+
+
+
+void updateQuantity(const std::vector<std::string> &bookISBN,
+                    std::vector<int> &bookQ) {
+
+  std::string searchISBN;
+  int newQ;
+  bool found = false; 
+
+  std::cout << "Enter book ISBN:";
+  std::cin.ignore();
+  std::getline(std::cin, searchISBN);
+
+  for (size_t i = 0; i < bookISBN.size(); i++) {
+    if (bookISBN[i] == searchISBN) {
+      found = true; 
+      std::cout << "Current book quantity is: " << bookQ[i] << std::endl;
+      std::cout << "Enter new quantity: ";
+      std::cin >> newQ;
+      bookQ[i] = newQ;
+      std::cout << "Update Successful." << std::endl;
+      break;
+    } 
+  }
+   if (!found) {
+        std::cout << "Book with ISBN " << searchISBN << " not found." << std::endl;
+    }
+}
+
+void removeBook(std::vector<std::string> &bookT,
+                std::vector<std::string> &bookA,
+                std::vector<std::string> &bookISBN, std::vector<int> &bookQ) {
+
+  std::string searchISBN;
+  bool found = false; 
+
+  std::cout << "Enter ISBN: ";
+  std::cin.ignore();
+  std::getline(std::cin, searchISBN);
+
+  for (size_t i = 0; i < bookISBN.size(); i++) {
+    if (bookISBN[i] == searchISBN) {
+      found = true; 
+      bookISBN.erase(bookISBN.begin() + i);
+      bookT.erase(bookT.begin() + i);
+      bookA.erase(bookA.begin() + i);
+      bookQ.erase(bookQ.begin() + i);
+      std::cout << "Book was succefully removed." << std::endl;
+    }
+  }
+  if (!found) {
+        std::cout << "Book with ISBN " << searchISBN << " not found." << std::endl;
+  }
+}
+
+int main() {
+
+  std::vector<std::string> bookTitles;
+  std::vector<std::string> bookAuthors;
+  std::vector<std::string> bookISBNs;
+  std::vector<int> bookQuantities;
+
+  int choice;
+
+  do {
+
+    std::cout << "Book Inventory Management System Using Vectors" << std::endl;
+    std::cout << "----------------------------------------------" << std::endl;
+    std::cout << "Enter 1 to ADD a new Book" << std::endl;
+    std::cout << "Enter 2 to DISPLAY all Book" << std::endl;
+    std::cout << "Enter 3 to SEARCH by ISBN" << std::endl;
+    std::cout << "Enter 4 to UPDATE Quantity" << std::endl;
+    std::cout << "Enter 5 to REMOVE a Book" << std::endl;
+    std::cout << "Enter 6 to EXIT" << std::endl;
+
+    std::cout << "Enter choice:";
+    std::cin >> choice;
+
+    std::cout << std::endl;
+
+    switch (choice) {
+    case 1:
+      std::cout << "Your choice is 1" << std::endl;
+      addBook(bookTitles, bookAuthors, bookISBNs, bookQuantities);
+      break;
+
+    case 2:
+      std::cout << "Your choice is 2" << std::endl;
+      displayBooks(bookTitles, bookAuthors, bookISBNs, bookQuantities);
+      break;
+
+    case 3:
+      std::cout << "Your choice is 3" << std::endl;
+      searchByISBN(bookTitles, bookAuthors, bookISBNs, bookQuantities);
+      break;
+
+    case 4:
+      std::cout << "Your choice is 4" << std::endl;
+      updateQuantity(bookISBNs, bookQuantities);
+      break;
+
+    case 5:
+      std::cout << "Your choice is 5" << std::endl;
+      removeBook(bookTitles, bookAuthors, bookISBNs, bookQuantities);
+      break;
+
+    case 6:
+      std::cout << "Your choice is 6" << std::endl;
+      break;
+    }
+  } while (choice != 6);
+
+  return 0;
+}
